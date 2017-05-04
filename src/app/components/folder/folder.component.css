@@ -1,0 +1,106 @@
+.file-icon {
+  font-family: Arial, Tahoma, sans-serif;
+  font-weight: 300;
+  display: inline-block;
+  background: #018fef;
+  position: relative;
+  border-radius: 5px;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+}
+.file-icon::before {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-bottom-left-radius: 2px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #fff #fff rgba(255,255,255,.35) rgba(255,255,255,.35);
+}
+.file-icon::after {
+  display: block;
+  content: attr(data-type);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 10px;
+  color: #fff;
+  text-transform: lowercase;
+  width: 100%;
+  padding: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.folder {
+  font-family: Arial, Tahoma, sans-serif;
+  font-weight: 300;
+  display: inline-block;
+  width: 60px;
+  height: 24px;
+  background: #CCCCCC;
+  position: relative;
+  border-radius: 2px;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+}
+.contextMenu {
+  font-family: Arial, Tahoma, sans-serif;
+  font-weight: 300;
+  display: inline-block;
+  width: 60px;
+  height: 24px;
+  background: #000000;
+  position: relative;
+  border-radius: 2px;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+}
+
+.fonctions{
+  width: 240px;
+  height : 200px;
+  background: whitesmoke;
+}
+
+.glyphicon.glyphicon-file {
+  font-size: 25px;
+  color: #018fef;
+}
+
+.glyphicon.glyphicon-folder-open {
+  font-size: 25px;
+  color: #D69E31;
+}
+
+.fa.fa-chrome {
+  font-size: 20px;
+}
+
+.fa.fa-dropbox {
+  font-size: 20px;
+}
+
+.cellpadding {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+table td {
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+.shareLink {
+  -webkit-tap-highlight-color:red;
+  -webkit-touch-callout: default;
+  -webkit-user-select: text;
+/*-khtml-user-select: none;*/
+  -moz-user-select: text;
+  user-select: text;
+}
+

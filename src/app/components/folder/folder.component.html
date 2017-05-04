@@ -1,0 +1,149 @@
+
+
+
+
+
+
+
+<table width="100%">
+
+  <tr>
+    <th>Drive</th>
+    <th>Nom</th>
+    <th>Taille</th>
+    <th>Droits</th>
+  </tr>
+
+
+    <tr *ngFor="let current of folder.children">
+
+      <td class="cellpadding" width="5%">
+
+
+      <span *ngIf="current.isOnGoogle()">
+        <div class="fa fa-chrome"></div>
+      </span>
+
+        <div *ngIf="current.isOnDropBox()">
+          <div class="fa fa-dropbox"></div>
+        </div>
+
+      </td>
+
+      <!--début de la partie folder / fichiers de la table-->
+
+      <td class="cellpadding" width="75%">
+
+    <span *ngIf="current.isFolder()">
+
+          <div class="glyphicon glyphicon-folder-open" (dblclick)="current.toggle()" (click)="current.changeCurrentSelect()" (dblclick)="getData(current)" (contextmenu)="current.onRightClick($event)"> {{ current.name }}
+          </div>
+          <ul>
+            <div *ngIf="current.rightClick">
+
+<label class="btn btn-default btn-file btn-primary">
+  Upload <input type="file" style="display: none;"(change)="upload($event, current)"/>
+</label>
+              <div >
+                <i>
+
+
+                  <!--Fonctions des Folders-->
+                  <div class="row">
+                    <div class="col-lg-4  ">
+                        <div class="input-group">
+                          <input [(ngModel)]="newNameFile" type="text" class="form-control" placeholder="Nom du fichier">
+                          <span class="input-group-btn">
+                            <button (click)="addFile(current, newNameFile)" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter fichier</button>
+                          </span>
+                        </div><!-- /input-group -->
+                      </div><!-- /.col-lg-6 -->
+
+                    <button (click)="cut(current, folder)" type="button" class="btn btn-success"><span class="glyphicon glyphicon-scissors"></span> Couper</button>
+                    <button (click)="paste(current)" (click)="post(current, folder)" type="button" class="btn btn-success"><span class="glyphicon glyphicon-paste"></span> Coller</button>
+                    <button (click)="refresh(current)" type="button" class="btn btn-info"><span class="glyphicon glyphicon-refresh"></span> Rafraîchir</button>
+                    <button (click)="delete(current, folder)" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+                  </div>
+
+
+
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="input-group">
+                        <input [(ngModel)]="newNameFolder" type="text" class="form-control" placeholder="Nom du dossier">
+                        <span class="input-group-btn">
+                          <button (click)="addFolder(current, newNameFolder)" (click)="post(current, folder)" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter dossier</button>
+                        </span>
+                      </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                   </div>
+
+
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="input-group">
+                        <input [(ngModel)]="changeNameFolder" type="text" class="form-control" placeholder="Nouveau nom">
+                        <span class="input-group-btn">
+                          <button (click)="changeName(current, changeNameFolder)" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-plus-sign"></span> Changer de nom</button>
+                        </span>
+                      </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                  </div>
+
+
+                </i>
+              </div>
+          </div>
+
+
+          <div *ngIf="current.expanded">
+            <app-folder [folder]="current"></app-folder>
+          </div>
+          </ul>
+        </span>
+
+
+
+        <span *ngIf="!current.isFolder()">
+           <div class="glyphicon glyphicon-file" (click)="current.changeCurrentSelect()" (contextmenu)="current.onRightClick($event)"> {{ current.name }}</div>
+              <div *ngIf="current.rightClick">
+
+                        <!--Fonctions des Files-->
+
+              <input [(ngModel)]="changeNameFile" type=text placeholder="Nouveau nom">
+              <button (click)="changeName(current, changeNameFile)" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Changer</button>
+                  <button (click)="cut(current, folder)" type="button" class="btn btn-success"><span class="glyphicon glyphicon-scissors"></span> Couper</button>
+                  <button (click)="getShareLink($event.target, current)" type="button" class="btn btn-info shareLink"> <span class="glyphicon glyphicon-link"></span> Lien de partage</button>
+                  <button (click)="delete(current, folder)" type="button" class="btn btn-danger"> <span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+                 <span *ngIf="(current._size !== null) ">
+                <button type="button" class="btn btn-warning"> <span class="glyphicon glyphicon-download"></span> <a [attr.href]="current.downloadLink" download>Download</a></button>
+                 </span>
+
+              </div>
+      </span>
+
+        <!--fin de la table des folders / files -->
+      </td>
+
+
+      <td class="cellpadding" width="10%">
+        <span *ngIf="!current.isFolder()">
+          <span *ngIf="!(current._size === null) ">
+           <span *ngIf="current.isOnGoogle()">
+              {{current._size /1024 | number : "1.1-1"}} Kb
+           </span>
+           <span *ngIf="current.isOnDropBox()">
+              {{current._size /1024 | number : "1.1-1"}} Kb
+           </span>
+          </span>
+
+        </span>
+      </td>
+
+
+      <td class="cellpadding"  width="10%">
+        {{current.rights}}
+      </td>
+    </tr>
+
+</table>

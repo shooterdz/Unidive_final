@@ -1,0 +1,134 @@
+<div (click)="updateSelected()">
+  <div class="row">
+    <div class="col-lg-15  ">
+<h1 class="page-header" (contextmenu)="mainFolder.onRightClick($event)">
+  {{ mainFolder.name | uppercase}}
+
+  <span *ngIf="(currentSelect!=null)">
+    <i>{{currentSelect.getStringPathDisplay()}}</i>
+  </span>
+
+</h1>
+    </div>
+  </div>
+
+
+<div *ngIf="mainFolder.rightClick">
+
+  <!--Fonctions de Root-->
+  <label class="btn btn-default btn-file btn-primary">
+    Upload <input type="file" style="display: none;"(change)="upload($event, mainFolder)"/>
+  </label>
+
+  <div >
+    <i>
+      <!--Fonctions des Folders-->
+      <div class="row">
+        <div class="col-lg-4  ">
+          <div class="input-group">
+            <input [(ngModel)]="newNameFile" type="text" class="form-control" placeholder="Nom du fichier">
+            <span class="input-group-btn">
+                <button (click)="addFile(mainFolder, newNameFile)" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter fichier</button>
+              </span>
+          </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+
+
+        <button (click)="paste(mainFolder)" type="button" class="btn btn-success"><span class="glyphicon glyphicon-paste"></span> Coller</button>
+
+        <button (click)="refresh(mainFolder)" type="button" class="btn btn-info"><span class="glyphicon glyphicon-refresh"></span> Rafraîchir</button>
+
+      </div>
+
+
+      <div class="row">
+
+        <div class="col-lg-4">
+          <div class="input-group">
+            <input [(ngModel)]="newNameFolder" type="text" class="form-control" placeholder="Nom du dossier">
+            <span class="input-group-btn">
+              <button (click)="addFolder(mainFolder, newNameFolder)" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter dossier</button>
+            </span>
+          </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+
+      </div>
+
+
+    </i>
+  </div>
+
+  <br>
+
+</div>
+
+
+
+<app-folder [folder]= "mainFolder"></app-folder>
+
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+
+  <!--Définition de la navbar du haut-->
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#" style="padding: 0px">
+        <img src="./assets/cochon.png" style="height:100%;display:inline-block;">UniCloud
+      </a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a [routerLink]="['/files']">Fichiers</a></li>
+        <li><a [routerLink]="['/']">Log out</a></li>
+
+
+      </ul>
+
+      <!--Barres de progression de taille des drives-->
+
+
+      <div class="progress progressBar">
+        <div class="progress-bar progress-bar-info" role="progressbar" [style.width]="information.useOnDropBox/information.availableOnDropBox*100 + '%'">
+          {{information.useOnDropBox / information.availableOnDropBox * 100  | number : '1.2-2'}}% utilisés
+
+        </div>
+        <div class="progress-bar progress-bar-success" role="progressbar" [style.width]="(1-(information.useOnDropBox/information.availableOnDropBox))*100 + '%'">
+          {{(1 - information.useOnDropBox/information.availableOnDropBox)*100  | number : '1.2-2'}}% libres
+          <span class="fa fa-dropbox"></span>
+        </div>
+      </div>
+
+
+
+      <div class="progress progressBar">
+        <div class="progress-bar progress-bar-info" role="progressbar" [style.width]="information.useOnDrive/information.availableOnDrive*100 + '%'">
+          {{information.useOnDrive /information.availableOnDrive * 100  | number : '1.2-2'}}% utilisés
+        </div>
+        <div class="progress-bar progress-bar-success" role="progressbar" [style.width]="(1-(information.useOnDrive/information.availableOnDrive))*100 + '%'">
+          {{(1-(information.useOnDrive/information.availableOnDrive))*100  | number : '1.2-2'}}% libres
+          <span class="fa fa-chrome"></span>
+        </div>
+      </div>
+
+
+
+    </div><!--/.nav-collapse -->
+
+
+
+  </div>
+</nav>
+
+
+<div id='content-main' class='container' style="padding-top: 80px">
+</div>
+
+
+</div>
